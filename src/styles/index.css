@@ -4,9 +4,9 @@
   --color-text: #000000;
   --color-text-dark: #000000;
   --color-text-light: #ffffff;
-  --color-background-100: #ffffff;
+  --color-background-100: #eeeeee;
   --color-background-500: #ffffff;
-  --color-background-900: #eeeeee;
+  --color-background-900: #e0e0e0;
   --color-red: #fa5252;
   --color-red-dark: #e03131;
 }
@@ -35,7 +35,8 @@ body {
 
 .nav-bar {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
   align-items: center;
   height: 7.2rem;
   padding: 0 3.2rem;
@@ -51,9 +52,18 @@ body {
   justify-content: center;
 }
 
-.box {
-  width: 42rem;
-  max-width: 42rem;
+.box-1 {
+  width: 38rem;
+  max-width: 38rem;
+  background-color: var(--color-background-500);
+  border-radius: 0.9rem;
+  overflow: scroll;
+  position: relative;
+}
+
+.box-2 {
+  width: 46rem;
+  max-width: 46rem;
   background-color: var(--color-background-500);
   border-radius: 0.9rem;
   overflow: scroll;
@@ -98,7 +108,7 @@ body {
   padding: 1.1rem 1.6rem;
   font-size: 1.8rem;
   border-radius: 0.7rem;
-  width: 40rem;
+  width: 35rem;
   transition: all 0.3s;
   /* background-color: var(--color-background-900); */
   /* background-color: var(--color-primary-light); */
@@ -149,7 +159,7 @@ body {
 .list li {
   position: relative;
   display: grid;
-  grid-template-columns: 4rem 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   column-gap: 2.4rem;
   font-size: 1.6rem;
