@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getMiembros } from "../services/apiMiembros";
+import { getMiembros } from "../../services/apiMiembros";
 
 export function useMiembros(query) {
   const [miembros, setMiembros] = useState([]);

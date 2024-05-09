@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-import { useMiembros } from "./hooks/useMiembros";
-import { useCursos } from "./hooks/useCursos";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
-
-import { MovieDetails } from "./components/movies/MovieDetails";
-import { WatchedSummary } from "./components/movies/WatchedSummary";
-import { WatchedMoviesList } from "./components/movies/WatchedMoviesList";
+import { useMiembros } from "./components/miembros/useMiembros";
+import { useCursos } from "./components/cursos/useCursos";
+// import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 import { ResourceList } from "./ui/ResourceList";
 import { Loader } from "./ui/Loader";
@@ -16,6 +12,7 @@ import { NavBar } from "./ui/NavBar";
 import { Search } from "./ui/Search";
 import { NumResults } from "./ui/NumResults";
 import { Box } from "./ui/Box";
+import { SelectedDetails } from "./components/selected/SelectedDetails";
 
 export const KEY = "f84fc31d";
 
@@ -23,29 +20,25 @@ export default function App() {
   const [queryM, setQueryM] = useState("");
   const [queryC, setQueryC] = useState("");
 
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState({ type: null, id: null });
+
+  console.log("id", selectedId);
 
   const { miembros, isLoading: isLoaMi, error: err1 } = useMiembros(queryM);
   const { cursos, isLoading: isLoaCu, error: err2 } = useCursos(queryC);
 
   const error = err1 || err2;
 
-  const [watched, setWatched] = useLocalStorageState([], "watched");
-
-  function handleSelectMovie(id) {
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  function handleSelectItem(idObj) {
+    setSelectedId((selectedId) =>
+      idObj.id === selectedId.id && idObj.type === selectedId.type
+        ? { type: null, id: null }
+        : idObj
+    );
   }
 
-  function handleCloseMovie() {
-    setSelectedId(null);
-  }
-
-  function handleAddWatched(movie) {
-    setWatched((watched) => [...watched, movie]);
-  }
-
-  function handleDeleteWatched(id) {
-    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  function handleCloseItem() {
+    setSelectedId({ type: null, id: null });
   }
 
   return (
@@ -53,7 +46,7 @@ export default function App() {
       <NavBar>
         <Search query={queryM} setQuery={setQueryM} resource="Miembros" />
         <Search query={queryC} setQuery={setQueryC} resource="Cursos" />
-        <NumResults movies={miembros} />
+        <NumResults resorces={miembros} />
       </NavBar>
 
       <Main>
@@ -62,7 +55,7 @@ export default function App() {
           {!isLoaMi && !error && (
             <ResourceList
               resources={miembros}
-              onSelect={handleSelectMovie}
+              onSelect={handleSelectItem}
               type="miembros"
             />
           )}
@@ -74,7 +67,7 @@ export default function App() {
           {!isLoaCu && !error && (
             <ResourceList
               resources={cursos}
-              onSelect={handleSelectMovie}
+              onSelect={handleSelectItem}
               type="cursos"
             />
           )}
@@ -82,14 +75,14 @@ export default function App() {
         </Box>
 
         <Box type="2">
-          {selectedId ? (
-            <MovieDetails
+          {selectedId.id ? (
+            <SelectedDetails
               selectedId={selectedId}
-              onCloseMovie={handleCloseMovie}
-              onAddWatched={handleAddWatched}
-              watched={watched}
+              setSelectedId={setSelectedId}
+              onClose={handleCloseItem}
             />
-          ) : (
+          ) : null}
+          {/* 
             <>
               <WatchedSummary watched={watched} />
               <WatchedMoviesList
@@ -97,7 +90,7 @@ export default function App() {
                 onDeleteWatched={handleDeleteWatched}
               />
             </>
-          )}
+          )} */}
         </Box>
       </Main>
     </>

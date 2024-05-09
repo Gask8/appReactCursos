@@ -1,8 +1,21 @@
 import supabase from "./supabase";
 
-export async function getCursos(query) {
-  console.log(query, `%${query}%`);
+export async function getCurso(id) {
+  const { data, error } = await supabase
+    .from("cursos")
+    .select("*")
+    .eq("id", id)
+    .single();
 
+  if (error) {
+    console.error(error);
+    throw new Error("No se pudo cargar la informacion");
+  }
+
+  return data;
+}
+
+export async function getCursos(query) {
   const { data, error } = await supabase
     .from("cursos")
     .select("*")

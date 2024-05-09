@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCursos } from "../services/apiCursos";
+import { getCursos } from "../../services/apiCursos";
 
 export function useCursos(query) {
   const [cursos, setCursos] = useState([]);

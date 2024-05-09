@@ -1,11 +1,14 @@
 import supabase from "./supabase";
 
-export async function getMiembro(id) {
+export async function getCursosForMiembro(id) {
+  if (!id) {
+    return [];
+  }
+
   const { data, error } = await supabase
-    .from("miembros")
-    .select("*")
-    .eq("id", id)
-    .single();
+    .from("miembros_cursos")
+    .select("id, creado_en, cursos(*)")
+    .eq("id_miembro", id);
 
   if (error) {
     console.error(error);
@@ -15,21 +18,15 @@ export async function getMiembro(id) {
   return data;
 }
 
-export async function getMiembros(query) {
-  // const { id, seccion, localidad } = options;
+export async function getMiembrosForCurso(id) {
+  if (!id) {
+    return [];
+  }
 
   const { data, error } = await supabase
-    .from("miembros")
-    .select("*")
-    .ilike("nombre", `%${query}%`);
-
-  // .from("Individual_Inform")
-  // .select("*")
-  // .eq("seccion", seccion)
-  // .eq("id_batch", id)
-  // .eq("localidad", localidad)
-  // .limit(1)
-  // .single();
+    .from("miembros_cursos")
+    .select("id, creado_en, miembros(*)")
+    .eq("id_curso", id);
 
   if (error) {
     console.error(error);

@@ -1,7 +1,7 @@
-export function NumResults({ movies }) {
+export function NumResults({ resorces }) {
   return (
     <p className="num-results">
-      Found <strong>{movies.length}</strong> results
+      Encontrados <strong>{resorces.length}</strong> miembros
     </p>
   );
 }
