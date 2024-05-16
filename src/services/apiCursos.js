@@ -19,7 +19,8 @@ export async function getCursos(query) {
   const { data, error } = await supabase
     .from("cursos")
     .select("*")
-    .ilike("nombre", `%${query}%`);
+    .ilike("nombre", `%${query}%`)
+    .order("creado_en", { ascending: true });
 
   if (error) {
     console.error(error);

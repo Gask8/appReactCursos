@@ -21,6 +21,7 @@ export default function App() {
   const [queryC, setQueryC] = useState("");
 
   const [selectedId, setSelectedId] = useState({ type: null, id: null });
+  const [memoryStack, setMemoryStack] = useState([]);
 
   console.log("id", selectedId);
 
@@ -35,10 +36,20 @@ export default function App() {
         ? { type: null, id: null }
         : idObj
     );
+    setMemoryStack((memoryStack) => [...memoryStack, idObj]);
   }
 
   function handleCloseItem() {
     setSelectedId({ type: null, id: null });
+  }
+
+  function handleGoBack() {
+    if (memoryStack.length > 1) {
+      memoryStack.pop();
+      setSelectedId(memoryStack[memoryStack.length - 1]);
+    } else {
+      handleCloseItem();
+    }
   }
 
   return (
@@ -79,7 +90,7 @@ export default function App() {
             <SelectedDetails
               selectedId={selectedId}
               setSelectedId={setSelectedId}
-              onClose={handleCloseItem}
+              onClose={handleGoBack}
             />
           ) : null}
           {/* 

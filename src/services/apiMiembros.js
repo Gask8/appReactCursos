@@ -21,7 +21,8 @@ export async function getMiembros(query) {
   const { data, error } = await supabase
     .from("miembros")
     .select("*")
-    .ilike("nombre", `%${query}%`);
+    .ilike("nombre", `%${query}%`)
+    .order("creado_en", { ascending: true });
 
   // .from("Individual_Inform")
   // .select("*")

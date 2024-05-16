@@ -14,15 +14,30 @@ export function DetailMiembro({ item, setSelectedId }) {
     seccion,
   } = item;
 
-  const { cursos } = useCursosForMiembros(id);
+  const { cursos, isLoading } = useCursosForMiembros(id);
+
+  function selectImg(rama, nombre) {
+    switch (rama) {
+      case "Laicos Consagrados":
+        return "consagrado_img.png";
+      case "Consagradas":
+        return "consagrada_img.png";
+      case "Legionarios de Cristo":
+        return "legionario_img.png";
+      default:
+        if (nombre?.trim().slice(-1) === "a") return "laica_img.png";
+        return "laico_img.png";
+    }
+  }
 
   return (
     <>
       <header>
         <div className="flexH">
-          <img src={"legionario_img.png"} alt={`profile image`} />
+          <img src={selectImg(rama, nombre)} alt={`profile image`} />
           <h2>
             {nombre} {apellido_paterno} {apellido_materno}
+            &nbsp;
           </h2>
           {ponente && <span>🎓</span>}
         </div>
@@ -34,7 +49,7 @@ export function DetailMiembro({ item, setSelectedId }) {
           </div>
 
           <p>
-            <span>📍 Ubicación:</span>
+            <span>📍 Ubicación: </span>
             {territorio} {localidad} {seccion}
           </p>
         </div>
@@ -43,6 +58,7 @@ export function DetailMiembro({ item, setSelectedId }) {
       <section>
         <div className="rating">
           <h4>📚 Cursos</h4>
+          {isLoading && <p>Cargando...</p>}
           {cursos.length > 0 ? (
             <Cursos cursos={cursos} onSelect={setSelectedId} />
           ) : (

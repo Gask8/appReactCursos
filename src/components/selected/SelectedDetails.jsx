@@ -31,7 +31,7 @@ export function SelectedDetails({ selectedId, setSelectedId, onClose }) {
       ) : (
         <>
           <button className="btn-back" onClick={onClose}>
-            &larr;
+            ⬅️
           </button>
           {selectedId.type === "miembro" ? (
             <DetailMiembro item={item} setSelectedId={setSelectedId} />
