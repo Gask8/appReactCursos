@@ -1,5 +1,19 @@
 import { useCursosForMiembros } from "./useCursosForMiembros";
 
+function selectImg(rama, nombre) {
+  switch (rama) {
+    case "Laicos Consagrados":
+      return "consagrado_img.png";
+    case "Consagradas":
+      return "consagrada_img.png";
+    case "Legionarios de Cristo":
+      return "legionario_img.png";
+    default:
+      if (nombre?.trim().slice(-1) === "a") return "laica_img.png";
+      return "laico_img.png";
+  }
+}
+
 export function DetailMiembro({ item, setSelectedId }) {
   const {
     id,
@@ -15,20 +29,6 @@ export function DetailMiembro({ item, setSelectedId }) {
   } = item;
 
   const { cursos, isLoading } = useCursosForMiembros(id);
-
-  function selectImg(rama, nombre) {
-    switch (rama) {
-      case "Laicos Consagrados":
-        return "consagrado_img.png";
-      case "Consagradas":
-        return "consagrada_img.png";
-      case "Legionarios de Cristo":
-        return "legionario_img.png";
-      default:
-        if (nombre?.trim().slice(-1) === "a") return "laica_img.png";
-        return "laico_img.png";
-    }
-  }
 
   return (
     <>

@@ -1,11 +1,14 @@
+import { useState } from "react";
+import { Select } from "../../ui/Select";
 import { useMiembrosForCursos } from "./useMiembrosForCursos";
 
 export function DetailCurso({ item, setSelectedId }) {
   const { id, nombre, fecha_inicio, fecha_certificacion, ponente } = item;
 
-  const { miembros } = useMiembrosForCursos(id);
+  const { miembros, isLoading } = useMiembrosForCursos(id);
+  const [select, setSelect] = useState(null);
 
-  console.log(miembros);
+  // console.log(miembros);
 
   return (
     <div style={{ padding: "2rem 0" }}>
@@ -30,6 +33,8 @@ export function DetailCurso({ item, setSelectedId }) {
       <section>
         <div className="rating">
           <h4>👥 Miembros</h4>
+          <Select resource="Seccion" value={select} setValue={setSelect} />
+          {isLoading && <p>Cargando...</p>}
           {miembros.length > 0 ? (
             <Miembros miembros={miembros} onSelect={setSelectedId} />
           ) : (
