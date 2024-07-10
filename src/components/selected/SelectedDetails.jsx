@@ -9,8 +9,6 @@ export function SelectedDetails({ selectedId, setSelectedId, onClose }) {
 
   const { item, isLoading } = useDetailItem(selectedId);
 
-  console.log(item);
-
   // useEffect(
   //   function () {
   //     if (!title) return;

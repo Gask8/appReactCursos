@@ -6,9 +6,24 @@ export function DetailCurso({ item, setSelectedId }) {
   const { id, nombre, fecha_inicio, fecha_certificacion, ponente } = item;
 
   const { miembros, isLoading } = useMiembrosForCursos(id);
-  const [select, setSelect] = useState(null);
+  const [selectSection, setSelectSection] = useState("");
+  const [selectLocality, setSelectLocality] = useState("");
 
-  // console.log(miembros);
+  console.log(miembros);
+
+  const filteredMiembrosBySection =
+    selectSection === ""
+      ? miembros
+      : miembros.filter(
+          (element) => element.miembros.seccion === selectSection
+        );
+
+  const filteredMiembrosByLocality =
+    selectLocality === ""
+      ? filteredMiembrosBySection
+      : filteredMiembrosBySection.filter(
+          (element) => element.miembros.localidad === selectLocality
+        );
 
   return (
     <div style={{ padding: "2rem 0" }}>
@@ -33,10 +48,31 @@ export function DetailCurso({ item, setSelectedId }) {
       <section>
         <div className="rating">
           <h4>👥 Miembros</h4>
-          <Select resource="Seccion" value={select} setValue={setSelect} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Select
+              resource="Localidad"
+              value={selectLocality}
+              setValue={setSelectLocality}
+            />
+            <Select
+              resource="Seccion"
+              value={selectSection}
+              setValue={setSelectSection}
+            />
+          </div>
+
           {isLoading && <p>Cargando...</p>}
-          {miembros.length > 0 ? (
-            <Miembros miembros={miembros} onSelect={setSelectedId} />
+          {filteredMiembrosByLocality.length > 0 ? (
+            <Miembros
+              miembros={filteredMiembrosByLocality}
+              onSelect={setSelectedId}
+            />
           ) : (
             <p className="alignCenter">
               <b>No tiene miembros</b>

@@ -9,29 +9,57 @@ const secList = [
   "ECYD Masculino",
 ];
 
+const locList = [
+  "Acapulco",
+  "Campeche",
+  "Cancún",
+  "Chetumal",
+  "Cozumel",
+  "Costa Rica",
+  "Cotija",
+  "Córdoba",
+  "Cuernavaca",
+  "El Salvador",
+  "Guatemala",
+  "Lindavista",
+  "Mérida",
+  "México Norte",
+  "México Poniente",
+  "México Sur",
+  "Morelia",
+  "Oaxaca",
+  "Orizaba",
+  "Pachuca",
+  "Playa del Carmen",
+  "Puebla",
+  "Querétaro",
+  "Tapachula",
+  "Toluca",
+  "Tuxtla Gutiérrez",
+  "Veracruz",
+  "Villahermosa",
+  "Xalapa",
+];
+
 export function Select({ value, setValue, resource }) {
-  // const inputEl = useRef(null);
-
   return (
-    <div style={{ display: "flex", justifyContent: "space-around" }}>
-      {/* <input
-        className="search"
-        type="text"
-        placeholder={`Buscar ${resource}...`}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        ref={inputEl}
-      /> */}
-
+    <>
       <label>{`Buscar ${resource}...`}</label>
 
-      <select name="seccion" id="seccion" value={value} onChange={setValue}>
+      <select
+        className="select"
+        name={resource}
+        id={resource}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      >
         <option value="">--Seleccionar--</option>
-        {secList.map((sec) => (
-          <Option key={sec} value={sec} />
-        ))}
+
+        {resource === "Localidad"
+          ? locList.map((loc) => <Option key={loc} value={loc} />)
+          : secList.map((sec) => <Option key={sec} value={sec} />)}
       </select>
-    </div>
+    </>
   );
 }
 

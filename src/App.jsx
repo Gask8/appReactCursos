@@ -23,8 +23,6 @@ export default function App() {
   const [selectedId, setSelectedId] = useState({ type: null, id: null });
   const [memoryStack, setMemoryStack] = useState([]);
 
-  console.log("id", selectedId);
-
   const { miembros, isLoading: isLoaMi, error: err1 } = useMiembros(queryM);
   const { cursos, isLoading: isLoaCu, error: err2 } = useCursos(queryC);
 
